@@ -1,30 +1,22 @@
 import {
+  Button,
+  Kbd, Link,
+  link as linkStyles,
   Navbar as HeroUINavbar,
-  NavbarContent,
-  NavbarMenu,
-  NavbarMenuToggle,
   NavbarBrand,
+  NavbarContent,
   NavbarItem,
+  NavbarMenu,
   NavbarMenuItem,
-} from "@heroui/navbar";
-import { Button } from "@heroui/button";
-import { Kbd } from "@heroui/kbd";
-import { Link } from "@heroui/link";
-import { Input } from "@heroui/input";
-import { link as linkStyles } from "@heroui/theme";
+  NavbarMenuToggle,
+} from "@heroui/react";
 import NextLink from "next/link";
 import clsx from "clsx";
 
 import { siteConfig } from "@/config/site";
 import { ThemeSwitch } from "@/components/theme-switch";
-import {
-  TwitterIcon,
-  GithubIcon,
-  DiscordIcon,
-  HeartFilledIcon,
-  SearchIcon,
-  Logo,
-} from "@/components/icons";
+import { GithubIcon, SearchIcon } from "@/components/icons";
+import {Input} from "@heroui/react";
 
 export const Navbar = () => {
   const searchInput = (
@@ -50,11 +42,22 @@ export const Navbar = () => {
 
   return (
     <HeroUINavbar maxWidth="xl" position="sticky">
-      <NavbarContent className="basis-1/5 sm:basis-full justify-center items-center flex " justify="start">
+      <NavbarContent
+        className="basis-1/5 sm:basis-full justify-center items-center flex "
+        justify="start"
+      >
         <NavbarBrand className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-1" href="/">
             {/*<Button className="text-xl" size="lg" color="default" variant="light">Project</Button>*/}
-            <Button className="text-xl" radius="full" size="lg" color="primary" variant="flat">Synchra.namespace</Button>
+            <Button
+              className="text-xl"
+              radius="full"
+              size="lg"
+              color="primary"
+              variant="flat"
+            >
+              Synchra.namespace
+            </Button>
             {/*<Logo />*/}
             {/*<p className="font-bold text-inherit">ACME</p>*/}
           </NextLink>
@@ -96,12 +99,15 @@ export const Navbar = () => {
         {/*</NavbarItem>*/}
         <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
         <NavbarItem className="hidden md:flex">
-          <Button className="text-xl" size="lg" color="primary" radius="full">Create Objective</Button>
+          <Button className="text-xl" size="lg" color="primary" radius="full">
+            Create Objective
+          </Button>
         </NavbarItem>
         <NavbarItem className="hidden md:flex">
-          <Button size="lg" className="text-xl" variant="light">Login</Button>
+          <Button size="lg" className="text-xl" variant="light">
+            Login
+          </Button>
         </NavbarItem>
-
       </NavbarContent>
 
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
