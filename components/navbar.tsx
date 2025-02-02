@@ -53,8 +53,8 @@ export const Navbar = () => {
       <NavbarContent className="basis-1/5 sm:basis-full justify-center items-center flex " justify="start">
         <NavbarBrand className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-1" href="/">
-            <Button className="text-2xl" size="lg" color="default" variant="light">Project</Button>
-            <Button className="text-2xl" radius="full" size="lg" color="primary" variant="flat">Synchra</Button>
+            {/*<Button className="text-xl" size="lg" color="default" variant="light">Project</Button>*/}
+            <Button className="text-xl" radius="full" size="lg" color="primary" variant="flat">Synchra.namespace</Button>
             {/*<Logo />*/}
             {/*<p className="font-bold text-inherit">ACME</p>*/}
           </NextLink>
@@ -66,7 +66,7 @@ export const Navbar = () => {
                 className={clsx(
                   linkStyles({ color: "foreground" }),
                   "data-[active=true]:text-primary data-[active=true]:font-medium",
-                  "!text-2xl",
+                  "!text-xl",
                 )}
                 color="foreground"
                 href={item.href}
@@ -95,9 +95,13 @@ export const Navbar = () => {
         {/*  <ThemeSwitch />*/}
         {/*</NavbarItem>*/}
         <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
-        {/*<NavbarItem className="hidden md:flex">*/}
-        {/*  <Text>hi</Text>*/}
-        {/*</NavbarItem>*/}
+        <NavbarItem className="hidden md:flex">
+          <Button className="text-xl" size="lg" color="primary" radius="full">Create Objective</Button>
+        </NavbarItem>
+        <NavbarItem className="hidden md:flex">
+          <Button size="lg" className="text-xl" variant="light">Login</Button>
+        </NavbarItem>
+
       </NavbarContent>
 
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
