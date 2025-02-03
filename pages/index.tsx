@@ -9,6 +9,7 @@ import {
   Image,
   Input,
   InputOtp,
+  Progress,
   Tooltip,
   tv,
   useCheckbox,
@@ -16,8 +17,6 @@ import {
 } from "@heroui/react";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-
-import DefaultLayout from "@/layouts/default";
 import { useAtom } from "jotai";
 import { assessmentResultsAtom } from "@/lib/jotai";
 import NextLink from "next/link";
@@ -189,23 +188,31 @@ const IndexPage = () => {
     setItems(sortedItems);
   };
 
-   const MailIcon = (props) => {
+  const MailIcon = (props) => {
     return (
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"
-           className="size-6">
-        <path strokeLinecap="round" strokeLinejoin="round"
-              d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        strokeWidth={1.5}
+        stroke="currentColor"
+        className="size-6"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+        />
       </svg>
-
     );
-   };
+  };
 
   // @ts-ignore
   return (
     <motion.div
-      initial={{opacity: 0}}
-      animate={{opacity: 1}}
-      exit={{opacity: 0}}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
       transition={TRANSITION_CONFIG}
       className="grid grid-cols-3 gap-6 p-6"
     >
@@ -213,30 +220,40 @@ const IndexPage = () => {
         <motion.div
           key={item.id}
           layoutId={`${CARD_TRANSITION_ID}-${item.id}`}
-          initial={{opacity: 0, scale: 0.9}}
-          animate={{opacity: 1, scale: 1}}
-          exit={{opacity: 0, scale: 0.9}}
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.9 }}
           transition={TRANSITION_CONFIG}
         >
           <NextLink href={`/${item.id}`}>
-            <Card
-              className="cursor-pointer rounded-2xl px-4 py-6 shadow-lg transition-all hover:scale-105 hover:shadow-2xl">
+            <Card className="cursor-pointer rounded-2xl px-4 py-6 shadow-lg transition-all hover:scale-105 hover:shadow-2xl">
               <CardHeader className="flex-col items-start px-4 pt-2 pb-0">
                 <div className={`flex w-full justify-between items-around`}>
                   <p className="font-bold !w-full uppercase text-gray-700 text-tiny">
-                    <Badge
-                      content={'~'} variant="flat" color="success">Open ㅤ</Badge>
+                    <Badge content={"~"} variant="flat" color="success">
+                      Open ㅤ
+                    </Badge>
                   </p>
                   <div className="flex">
                     <Tooltip
                       content={
                         <div className="px-1 py-2">
-                          <div className="text-small font-bold">Psy Profile Score</div>
-                          <div className="text-tiny">How close the objective essence with your set of skills.</div>
+                          <div className="font-bold text-small">
+                            Psy Profile Score
+                          </div>
+                          <div className="text-tiny">
+                            How close the objective essence with your set of
+                            skills.
+                          </div>
                         </div>
                       }
                     >
-                      <Chip color="secondary" className="scale-85" variant="flat" size="sm">
+                      <Chip
+                        color="secondary"
+                        className="scale-85"
+                        variant="flat"
+                        size="sm"
+                      >
                         ≃ 0.93
                       </Chip>
                     </Tooltip>
@@ -244,12 +261,19 @@ const IndexPage = () => {
                     <Tooltip
                       content={
                         <div className="px-1 py-2">
-                          <div className="text-small font-bold">EVM Address of the OC</div>
+                          <div className="font-bold text-small">
+                            EVM Address of the OC
+                          </div>
                           <div className="text-tiny">Objective Creator</div>
                         </div>
                       }
                     >
-                      <Chip color="success" className="scale-85" variant="flat" size="sm">
+                      <Chip
+                        color="success"
+                        className="scale-85"
+                        variant="flat"
+                        size="sm"
+                      >
                         ..{item.issuer.slice(-4)}
                       </Chip>
                     </Tooltip>
@@ -257,7 +281,9 @@ const IndexPage = () => {
                     <Tooltip
                       content={
                         <div className="px-1 py-2">
-                          <div className="text-small font-bold">Objective ID Number</div>
+                          <div className="font-bold text-small">
+                            Objective ID Number
+                          </div>
                           <div className="text-tiny">Unique</div>
                         </div>
                       }
@@ -266,30 +292,65 @@ const IndexPage = () => {
                         #{item.id}
                       </Chip>
                     </Tooltip>
-
                   </div>
                 </div>
-                <small className="text-gray-500">488h to complete (June 15)</small>
+                <small className="text-gray-500">
+                  488h to complete (June 15)
+                </small>
                 <h4 className="text-lg font-bold text-gray-800">
                   Frontend Radio
                 </h4>
               </CardHeader>
               <CardBody className="flex justify-center overflow-visible py-4">
-                <CustomListBox/>
+                <CustomListBox />
+                <Progress
+                  className="mt-4"
+                  classNames={{
+                    base: "max-w-md",
+                    track: "drop-shadow-md border border-default",
+                    indicator: "bg-gradient-to-r from-primary-500 to-secondary-500",
+                    label: "tracking-wider font-medium text-default-600",
+                    value: "text-foreground/60",
+                  }}
+                  label="Progress"
+                  radius="sm"
+                  showValueLabel={true}
+                  size="sm"
+                  value={65}
+                />
+
                 <div className="my-6 flex flex-col !gap-4">
-                  <Input isReadOnly startContent={<MailIcon />} value={"first diaisdsiad dasidsai"} variant="underlined" size="sm"/>
-                  <Input isReadOnly startContent={<MailIcon />} value={"first diaisdsiad dasidsai"} variant="underlined" size="sm"/>
-                  <Input isReadOnly startContent={<MailIcon />} value={"first diaisdsiad dasidsai"} variant="underlined" size="sm"/>
+                  <Input
+                    isReadOnly
+                    startContent={<MailIcon />}
+                    value={"first diaisdsiad dasidsai"}
+                    variant="underlined"
+                    size="sm"
+                  />
+                  <Input
+                    isReadOnly
+                    startContent={<MailIcon />}
+                    value={"first diaisdsiad dasidsai"}
+                    variant="underlined"
+                    size="sm"
+                  />
+                  <Input
+                    isReadOnly
+                    startContent={<MailIcon />}
+                    value={"first diaisdsiad dasidsai"}
+                    variant="underlined"
+                    size="sm"
+                  />
                 </div>
                 <Image
                   alt="Card background"
-                  className="rounded-xl  object-cover shadow-md"
+                  className="rounded-xl object-cover shadow-md"
                   src="https://heroui.com/images/hero-card-complete.jpeg"
                   width={270}
                 />
               </CardBody>
-              <CardFooter className=" justify-between px-4 pt-2 pb-0">
-                <div className="flex w-full items-center flex-wrap md:flex-nowrap gap-4">
+              <CardFooter className="justify-between px-4 pt-2 pb-0">
+                <div className="flex w-full flex-wrap items-center gap-4 md:flex-nowrap">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     data-name="86977684-12db-4850-8f30-233a7c267d11"
@@ -327,15 +388,10 @@ const IndexPage = () => {
                 {/*  <Button*/}
                 {/*    variant="flat"*/}
                 {/*    radius="full"*/}
-                {/*    className="text-default-500 font-medium text-xl"*/}
+                {/*    className="text-xl font-medium text-default-500"*/}
                 {/*  >USDC</Button>*/}
                 {/*</div>*/}
-                <Button
-                  size="md"
-                  radius="full"
-                  color="primary"
-                  variant="flat"
-                >
+                <Button size="md" radius="full" color="primary" variant="flat">
                   Apply
                 </Button>
                 {/*<small className="text-gray-500">12 Tracks</small>*/}
