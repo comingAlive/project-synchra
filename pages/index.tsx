@@ -231,8 +231,8 @@ const IndexPage = () => {
                     <Tooltip
                       content={
                         <div className="px-1 py-2">
-                          <div className="text-small font-bold">Custom Content</div>
-                          <div className="text-tiny">This is a custom tooltip content</div>
+                          <div className="text-small font-bold">Psy Profile Score</div>
+                          <div className="text-tiny">How close the objective essence with your set of skills.</div>
                         </div>
                       }
                     >
@@ -240,16 +240,36 @@ const IndexPage = () => {
                         ≃ 0.93
                       </Chip>
                     </Tooltip>
-                    
-                    <Chip color="success" className="scale-85" variant="flat" size="sm">
-                      ..{item.issuer.slice(-4)}
-                    </Chip>
-                    <Chip className="scale-85" variant="flat" size="sm">
-                      #{item.id}
-                    </Chip>
+
+                    <Tooltip
+                      content={
+                        <div className="px-1 py-2">
+                          <div className="text-small font-bold">EVM Address of the OC</div>
+                          <div className="text-tiny">Objective Creator</div>
+                        </div>
+                      }
+                    >
+                      <Chip color="success" className="scale-85" variant="flat" size="sm">
+                        ..{item.issuer.slice(-4)}
+                      </Chip>
+                    </Tooltip>
+
+                    <Tooltip
+                      content={
+                        <div className="px-1 py-2">
+                          <div className="text-small font-bold">Objective ID Number</div>
+                          <div className="text-tiny">Unique</div>
+                        </div>
+                      }
+                    >
+                      <Chip className="scale-85" variant="flat" size="sm">
+                        #{item.id}
+                      </Chip>
+                    </Tooltip>
+
                   </div>
                 </div>
-                <small className="text-gray-500">4 Metrics / 488h to complete (June 12)</small>
+                <small className="text-gray-500">488h to complete (June 15)</small>
                 <h4 className="text-lg font-bold text-gray-800">
                   Frontend Radio
                 </h4>
