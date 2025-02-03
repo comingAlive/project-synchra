@@ -274,7 +274,7 @@ export const Navbar = () => {
         {/*  </Link>*/}
         {/*  <ThemeSwitch />*/}
         {/*</NavbarItem>*/}
-        <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
+        {/*<NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>*/}
         <NavbarItem className="hidden md:flex">
           <Button className="text-xl" color="primary" radius="full" size="lg">
             Create Objective
