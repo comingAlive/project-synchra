@@ -14,12 +14,13 @@ import {
 } from "@heroui/react";
 import NextLink from "next/link";
 import clsx from "clsx";
-
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { tv } from "tailwind-variants";
+
 import { siteConfig } from "@/lib/site";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { GithubIcon, SearchIcon } from "@/components/icons";
-import { tv } from "tailwind-variants";
+import ProfileMenu from "@/components/ProfileMenu";
 
 const buttonStyles = tv({
   base: [
@@ -87,8 +88,6 @@ const accountButtonStyles = tv({
   ],
 });
 
-
-
 export const Navbar = () => {
   const CustomConnectButton = () => {
     return (
@@ -124,10 +123,10 @@ export const Navbar = () => {
                 if (!connected) {
                   return (
                     <Button
-                      onClick={openConnectModal}
-                      size="lg"
                       className="text-xl"
+                      size="lg"
                       variant="light"
+                      onClick={openConnectModal}
                     >
                       Login
                     </Button>
@@ -148,9 +147,9 @@ export const Navbar = () => {
                 return (
                   <div className="flex items-center gap-3">
                     <button
-                      onClick={openChainModal}
                       className={chainButtonStyles()}
                       type="button"
+                      onClick={openChainModal}
                     >
                       {chain.hasIcon && (
                         <div
@@ -160,8 +159,8 @@ export const Navbar = () => {
                           {chain.iconUrl && (
                             <img
                               alt={chain.name ?? "Chain icon"}
-                              src={chain.iconUrl}
                               className="w-5 h-5"
+                              src={chain.iconUrl}
                             />
                           )}
                         </div>
@@ -170,22 +169,23 @@ export const Navbar = () => {
                     </button>
 
                     <button
-                      onClick={openAccountModal}
                       className={accountButtonStyles()}
                       type="button"
+                      onClick={openAccountModal}
                     >
                       <div className="flex items-center gap-2">
-                        <div className="h-2 w-2 rounded-full bg-success"></div>
+                        <div className="h-2 w-2 rounded-full bg-success" />
                         <span className="text-sm font-medium">
-                          {account.displayName}
+                          .. {account.displayName.slice(5)}
                         </span>
-                        {account.displayBalance && (
-                          <span className="text-sm text-default-500">
-                            ({account.displayBalance})
-                          </span>
-                        )}
+                        {/*{account.displayBalance && (*/}
+                        {/*  <span className="text-sm text-default-500">*/}
+                        {/*    ({account.displayBalance})*/}
+                        {/*  </span>*/}
+                        {/*)}*/}
                       </div>
                     </button>
+                    <ProfileMenu />
                   </div>
                 );
               })()}
@@ -228,9 +228,9 @@ export const Navbar = () => {
             {/*<Button className="text-xl" size="lg" color="default" variant="light">Project</Button>*/}
             <Button
               className="text-xl"
+              color="primary"
               radius="full"
               size="lg"
-              color="primary"
               variant="flat"
             >
               Synchra.namespace
@@ -276,7 +276,7 @@ export const Navbar = () => {
         {/*</NavbarItem>*/}
         <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
         <NavbarItem className="hidden md:flex">
-          <Button className="text-xl" size="lg" color="primary" radius="full">
+          <Button className="text-xl" color="primary" radius="full" size="lg">
             Create Objective
           </Button>
         </NavbarItem>
