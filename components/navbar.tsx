@@ -21,6 +21,7 @@ import { siteConfig } from "@/lib/site";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { GithubIcon, SearchIcon } from "@/components/icons";
 import ProfileMenu from "@/components/ProfileMenu";
+import {useRouter} from "next/router";
 
 const buttonStyles = tv({
   base: [
@@ -89,6 +90,7 @@ const accountButtonStyles = tv({
 });
 
 export const Navbar = () => {
+  const router = useRouter();
   const CustomConnectButton = () => {
     return (
       <ConnectButton.Custom>
@@ -276,7 +278,7 @@ export const Navbar = () => {
         {/*</NavbarItem>*/}
         {/*<NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>*/}
         <NavbarItem className="hidden md:flex">
-          <Button className="text-xl" color="primary" radius="full" size="lg">
+          <Button onPress={() => router.push('/create')} className="text-xl" color="primary" radius="full" size="lg">
             Create Objective
           </Button>
         </NavbarItem>
