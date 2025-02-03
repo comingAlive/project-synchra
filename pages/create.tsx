@@ -1,13 +1,14 @@
 import DefaultLayout from "@/layouts/default";
 
-import {Form, Input, Button, User} from "@heroui/react";
+import { Form, Input, Button, User } from "@heroui/react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-import {DatePicker} from "@heroui/react";
-import {now, getLocalTimeZone} from "@internationalized/date";
-import {useAccount} from "wagmi";
+import { DatePicker } from "@heroui/react";
+import { now, getLocalTimeZone } from "@internationalized/date";
+import { useAccount } from "wagmi";
 import OpenAI from "openai";
+import { supabase } from "@/lib/supabaseClient";
 
 const DeadlineComponent = () => (
   <div className="w-full max-w-xl flex flex-row gap-4">
@@ -21,7 +22,6 @@ const DeadlineComponent = () => (
     />
   </div>
 );
-
 
 const FormComponent = () => {
   const [errors, setErrors] = useState({});
@@ -51,6 +51,18 @@ const FormComponent = () => {
     if (metrics.length > 1) {
       setMetrics(metrics.filter((_, i) => i !== index));
     }
+  };
+
+  const [status, setStatus] = useState(null);
+
+  const { address } = useAccount();
+  const handleCreateObjective = async () => {
+    const r = await supabase.from("a-objs").insert({
+      name: "test",
+      success_metrics: ["test"],
+      issuer: address,
+    });
+    r.status === 201 ? setStatus("success") : setStatus("error");
   };
 
   const updateMetric = (index, value) => {
@@ -118,7 +130,7 @@ const FormComponent = () => {
           +
         </Button>
       </div>
-      <DeadlineComponent/>
+      <DeadlineComponent />
       <Input
         type="number"
         label="Reward"
@@ -140,10 +152,17 @@ const FormComponent = () => {
         Check
       </Button>
 
-      <Button fullWidth size="lg" type="submit" variant="flat">
+      <Button
+        onPress={handleCreateObjective}
+        color="primary"
+        fullWidth
+        size="lg"
+        type="submit"
+        variant="flat"
+      >
         Create
       </Button>
-
+      <pre>{JSON.stringify(status, null, 2)}</pre>
     </Form>
   );
 };
@@ -159,14 +178,13 @@ function callServer(data) {
 }
 
 const CreatePage = () => {
-
   const client = new OpenAI({
     apiKey: process.env.NEXT_PUBLIC_DEEPSEEK_API_KEY,
-    baseURL: 'https://api.deepseek.com',
-    dangerouslyAllowBrowser: true
+    baseURL: "https://api.deepseek.com",
+    dangerouslyAllowBrowser: true,
   });
 
-  const {address} = useAccount()
+  const { address } = useAccount();
   return (
     <DefaultLayout>
       <div className="flex sm:max-w-xl mx-auto flex-col gap-8 justify-center items-center">
@@ -175,7 +193,7 @@ const CreatePage = () => {
           avatarProps={{
             src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGklunSbvzFMwXyBTzb9Nq0AGvaV4FV6SX7Laz-0rB7ECl2PB3YbrGnqZ5t5X0hiFj9kA&usqp=CAU",
           }}
-          description={"..." +address?.slice(-5)}
+          description={"..." + address?.slice(-5)}
           name="Objective Issuer"
         />
         <FormComponent />
