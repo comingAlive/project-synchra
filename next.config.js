@@ -6,8 +6,8 @@ const nextConfig = {
   //   return config
   // },
   i18n: {
-    locales: ['en-US', 'zh-CN'],
-    defaultLocale: 'en-US',
+    locales: ["en-US", "zh-CN"],
+    defaultLocale: "en-US",
   },
 };
 

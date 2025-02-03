@@ -15,7 +15,7 @@ export const siteConfig = {
     {
       label: "Connect",
       href: "/connect",
-    }
+    },
   ],
   navMenuItems: [
     {
