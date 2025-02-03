@@ -76,7 +76,7 @@ const FormComponent = () => {
         placeholder="Enter Objective's name"
       />
       <div className="flex flex-col w-full gap-4">
-        <p className="text-lg font-semibold">Success Metrics:</p>
+        <p className="text-lg font-semibold">Success Metrics</p>
         <AnimatePresence>
           {metrics.map((metric, index) => (
             <motion.div
