@@ -89,6 +89,7 @@ const ProfileMenu = () => (
           />
         </DropdownItem>
         <DropdownItem key="dashboard">Dashboard</DropdownItem>
+        <DropdownItem key="assessment">Assessment</DropdownItem>
         <DropdownItem key="settings">Settings</DropdownItem>
         <DropdownItem
           key="new_project"
