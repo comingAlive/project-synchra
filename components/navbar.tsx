@@ -17,8 +17,113 @@ import { siteConfig } from "@/lib/site";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { GithubIcon, SearchIcon } from "@/components/icons";
 import {Input} from "@heroui/react";
+import { ConnectButton } from '@rainbow-me/rainbowkit';
+
 
 export const Navbar = () => {
+
+  const CustomConnectButton = () => {
+    return (
+      <ConnectButton.Custom>
+        {({
+            account,
+            chain,
+            openAccountModal,
+            openChainModal,
+            openConnectModal,
+            authenticationStatus,
+            mounted,
+          }) => {
+          const ready = mounted && authenticationStatus !== 'loading';
+          const connected =
+            ready &&
+            account &&
+            chain &&
+            (!authenticationStatus || authenticationStatus === 'authenticated');
+
+          return (
+            <div
+              {...(!ready && {
+                'aria-hidden': true,
+                'style': {
+                  opacity: 0,
+                  pointerEvents: 'none',
+                  userSelect: 'none',
+                },
+              })}
+            >
+              {(() => {
+                if (!connected) {
+                  return (
+                    <Button onClick={openConnectModal} size="lg" className="text-xl" variant="light">
+                      Login
+                    </Button>
+                  );
+                }
+
+                if (chain?.unsupported) {
+                  return (
+                    <Button
+                      className={buttonStyles({ variant: "danger" })}
+                      onClick={openChainModal}
+                    >
+                      Wrong Network
+                    </Button>
+                  );
+                }
+
+                return (
+                  <div className="flex items-center gap-3">
+                    <button
+                      onClick={openChainModal}
+                      className={chainButtonStyles()}
+                      type="button"
+                    >
+                      {chain.hasIcon && (
+                        <div
+                          className="w-5 h-5 rounded-full overflow-hidden"
+                          style={{ background: chain.iconBackground }}
+                        >
+                          {chain.iconUrl && (
+                            <img
+                              alt={chain.name ?? 'Chain icon'}
+                              src={chain.iconUrl}
+                              className="w-5 h-5"
+                            />
+                          )}
+                        </div>
+                      )}
+                      <span className="text-sm font-medium">{chain.name}</span>
+                    </button>
+
+                    <button
+                      onClick={openAccountModal}
+                      className={accountButtonStyles()}
+                      type="button"
+                    >
+                      <div className="flex items-center gap-2">
+                        <div className="h-2 w-2 rounded-full bg-success"></div>
+                        <span className="text-sm font-medium">
+                        {account.displayName}
+                      </span>
+                        {account.displayBalance && (
+                          <span className="text-sm text-default-500">
+                          ({account.displayBalance})
+                        </span>
+                        )}
+                      </div>
+                    </button>
+                  </div>
+                );
+              })()}
+            </div>
+          );
+        }}
+      </ConnectButton.Custom>
+    );
+  };
+
+
   const searchInput = (
     <Input
       aria-label="Search"
@@ -104,9 +209,7 @@ export const Navbar = () => {
           </Button>
         </NavbarItem>
         <NavbarItem className="hidden md:flex">
-          <Button size="lg" className="text-xl" variant="light">
-            Login
-          </Button>
+          <CustomConnectButton/>
         </NavbarItem>
       </NavbarContent>
 
