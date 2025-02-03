@@ -1,4 +1,4 @@
 import {atomWithStorage} from "jotai/utils";
 
 
-export const assessmentResultAtom = atomWithStorage('assessmentResultAtom', [])
+export const assessmentResultsAtom = atomWithStorage('assessmentResultsAtom', [])
