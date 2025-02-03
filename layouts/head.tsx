@@ -1,6 +1,6 @@
 import NextHead from "next/head";
 
-import { siteConfig } from "@/config/site";
+import { siteConfig } from "@/lib/site";
 
 export const Head = () => {
   return (

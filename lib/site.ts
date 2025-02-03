@@ -12,6 +12,10 @@ export const siteConfig = {
       label: "Social",
       href: "/social",
     },
+    {
+      label: "Connect",
+      href: "/connect",
+    }
   ],
   navMenuItems: [
     {
