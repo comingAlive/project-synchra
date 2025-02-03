@@ -57,7 +57,7 @@ const AssessmentPage = () => {
       pairId: 5,
       questions: [
         { id: 9, text: "I have deep respect for fairness and humanity." },
-        { id: 10, text: "I have strategic, power-driven mindset." },
+        { id: 10, text: "I have a strategic, power-driven mindset." },
       ],
     },
   ];
@@ -215,7 +215,7 @@ const AssessmentPage = () => {
   return (
     <DefaultLayout>
       <div className=" bg-blue-50 border rounded-xl flex flex-col items-center justify-center p-4">
-        <div className="text-2xl mb-8">Based on your <span className="underline decoration-dashed decoration-from-font underline-offset-8">average behavior from the past</span></div>
+        <div className="text-2xl mb-8">Based on your <span className="underline decoration-dashed decoration-black/20 decoration-from-font underline-offset-8">average behavior from the past</span></div>
         <Card className="w-full max-w-lg mb-8 mt-8">
           <CardHeader>
             <div className="flex justify-between items-center w-full">
