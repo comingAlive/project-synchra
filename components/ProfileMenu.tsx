@@ -51,7 +51,7 @@ const ProfileMenu = () => {
           isBordered
           as="button"
           className="transition-transform"
-          src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGklunSbvzFMwXyBTzb9Nq0AGvaV4FV6SX7Laz-0rB7ECl2PB3YbrGnqZ5t5X0hiFj9kA&usqp=CAU"
         />
       </DropdownTrigger>
       <DropdownMenu
@@ -81,14 +81,14 @@ const ProfileMenu = () => {
             <User
               avatarProps={{
                 size: "sm",
-                src: "https://avatars.githubusercontent.com/u/30373425?v=4",
+                src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGklunSbvzFMwXyBTzb9Nq0AGvaV4FV6SX7Laz-0rB7ECl2PB3YbrGnqZ5t5X0hiFj9kA&usqp=CAU",
               }}
               classNames={{
                 name: "text-default-600",
                 description: "text-default-500",
               }}
-              description="@jrgarciadev"
-              name="Junior Garcia"
+              description="@abcdef"
+              name="Abc Def"
             />
           </DropdownItem>
           <DropdownItem key="dashboard">Dashboard</DropdownItem>

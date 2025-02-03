@@ -1,7 +1,7 @@
 import {
   Button,
   Card,
-  CardBody,
+  CardBody, CardFooter,
   CardHeader,
   Dropdown,
   DropdownItem,
@@ -11,7 +11,7 @@ import {
   Link,
 } from "@heroui/react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import {useEffect, useState} from "react";
 
 import DefaultLayout from "@/layouts/default";
 
@@ -21,6 +21,7 @@ import { useCheckbox, Chip, VisuallyHidden, tv } from "@heroui/react";
 import { useAtom } from "jotai";
 import { assessmentResultsAtom } from "@/lib/jotai";
 import NextLink from "next/link";
+import {supabase} from "@/lib/supabaseClient";
 
 const CheckIcon = (props) => {
   return (
@@ -95,14 +96,14 @@ const CheckboxPersonal = () => {
 
   const checkbox = tv({
     slots: {
-      base: "border-default hover:bg-default-200",
+      base: "border-default shadow-md hover:bg-default-200",
       content: "text-default-500",
     },
     variants: {
       isSelected: {
         true: {
-          base: "border-primary bg-primary-400 hover:bg-primary-500 hover:border-primary-500",
-          content: "text-primary-foreground pl-1",
+          base: "border-primary !text-white bg-indigo-400 hover:bg-indigo-500 hover:border-indigo-500",
+          content: "text-indigo-foreground pl-1",
         },
       },
       isFocusVisible: {
@@ -122,18 +123,18 @@ const CheckboxPersonal = () => {
       </VisuallyHidden>
       <Chip
         size={"lg"}
-        className="bg-gradient-to-tr from-blue-500 to-purple-500 text-white shadow-lg"
+        className="bg-gradient-to-tr from-blue-500 to-purple-500 text-white"
         radius="full"
         classNames={{
           base: styles.base(),
           content: styles.content(),
         }}
-        // color="primary"
+        // color="indigo"
         startContent={
           isSelected ? (
-            <CheckIcon className="ml-1 mr-2" />
+            <CheckIcon className="mr-2 ml-1" />
           ) : (
-            <UncheckIcon className="ml-1 mr-2" />
+            <UncheckIcon className="mr-2 ml-1" />
           )
         }
         variant="flat"
@@ -150,13 +151,25 @@ const CheckboxPersonal = () => {
 };
 
 const IndexPage = () => {
-  const [items, setItems] = useState(initialArr);
+  const [items, setItems] = useState([]);
   const [results] = useAtom(assessmentResultsAtom);
 
+
+  useEffect(() => {
+    const x = async () => {
+      const r = await supabase.from("a-objs").select();
+      setItems(r.data)
+    };
+    x()
+    
+  }, []);
+  
   // Toggle item selection on click
   const toggleItem = (item) => {
     setItems((prev) =>
-      prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item],
+      prev.some((i) => i.id === item.id)
+        ? prev.filter((i) => i.id !== item.id)
+        : [...prev, item]
     );
   };
 
@@ -178,16 +191,14 @@ const IndexPage = () => {
   return (
     <DefaultLayout>
       {/* Controls container */}
-      <div className="p-6 flex gap-4 justify-end items-center">
+      <div className="flex items-center justify-end gap-4 p-6">
         {results.length > 0 ? (
           <CheckboxPersonal />
         ) : (
           <span className="text-gray-400">
             Personal Sorting is Disabled - Please Complete{" "}
             <NextLink as={"span"} href="/assessment">
-              <Link as="span">
-              The Assessment
-              </Link>
+              <Link as="span">The Assessment</Link>
             </NextLink>
           </span>
         )}
@@ -226,7 +237,7 @@ const IndexPage = () => {
         <AnimatePresence>
           {items.map((item) => (
             <motion.div
-              key={item}
+              key={item.id}
               layout
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.85, y: 20 }}
@@ -239,24 +250,36 @@ const IndexPage = () => {
               }}
               onClick={() => toggleItem(item)}
             >
-              <Card className="py-6 px-4 cursor-pointer shadow-lg rounded-2xl transition-all hover:shadow-2xl hover:scale-105">
-                <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
-                  <p className="text-tiny uppercase font-bold text-gray-700">
-                    Daily Mix
-                  </p>
+              <Card className="cursor-pointer rounded-2xl px-4 py-6 shadow-lg transition-all hover:scale-105 hover:shadow-2xl">
+                <CardHeader className="flex-col items-start px-4 pt-2 pb-0">
+                  <div className={`flex w-full justify-between items-around`}>
+                    <p className="font-bold uppercase text-gray-700 text-tiny">
+                      Daily Mix
+                    </p>
+                    <Chip className="scale-85" variant="flat" size="sm">#{item.id}</Chip>
+                  </div>
                   <small className="text-gray-500">12 Tracks</small>
-                  <h4 className="font-bold text-lg text-gray-800">
+                  <h4 className="text-lg font-bold text-gray-800">
                     Frontend Radio
                   </h4>
                 </CardHeader>
-                <CardBody className="overflow-visible py-4 flex justify-center">
+                <CardBody className="flex justify-center overflow-visible py-4">
                   <Image
                     alt="Card background"
-                    className="object-cover rounded-xl shadow-md"
+                    className="rounded-xl object-cover shadow-md"
                     src="https://heroui.com/images/hero-card-complete.jpeg"
                     width={270}
                   />
                 </CardBody>
+                <CardFooter className="flex-col items-end px-4 pt-2 pb-0">
+                  <Button radius="full" color="primary" variant="flat">
+                    Apply To Join
+                  </Button>
+                  {/*<small className="text-gray-500">12 Tracks</small>*/}
+                  {/*<h4 className="text-lg font-bold text-gray-800">*/}
+                  {/*  Frontend Radio*/}
+                  {/*</h4>*/}
+                </CardFooter>
               </Card>
             </motion.div>
           ))}

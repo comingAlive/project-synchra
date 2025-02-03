@@ -1,11 +1,12 @@
 import DefaultLayout from "@/layouts/default";
 
-import { Form, Input, Button } from "@heroui/react";
+import {Form, Input, Button, User} from "@heroui/react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import {DatePicker} from "@heroui/react";
 import {now, getLocalTimeZone} from "@internationalized/date";
+import {useAccount} from "wagmi";
 
 const DeadlineComponent = () => (
   <div className="w-full max-w-xl flex flex-row gap-4">
@@ -157,9 +158,18 @@ function callServer(data) {
 }
 
 const CreatePage = () => {
+  const {address} = useAccount()
   return (
     <DefaultLayout>
-      <div className="flex justify-center items-center">
+      <div className="flex sm:max-w-xl mx-auto flex-col gap-8 justify-center items-center">
+        <User
+          className="self-end"
+          avatarProps={{
+            src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGklunSbvzFMwXyBTzb9Nq0AGvaV4FV6SX7Laz-0rB7ECl2PB3YbrGnqZ5t5X0hiFj9kA&usqp=CAU",
+          }}
+          description={"..." +address.slice(-5)}
+          name="Objective Issuer"
+        />
         <FormComponent />
       </div>
     </DefaultLayout>

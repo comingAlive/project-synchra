@@ -60,7 +60,7 @@ const buttonStyles = tv({
 const chainButtonStyles = tv({
   base: [
     "flex items-center gap-2",
-    "min-w-[140px]",
+    "min-w-[100px]",
     "h-10",
     "px-4",
     "rounded-lg",
@@ -78,7 +78,7 @@ const accountButtonStyles = tv({
     "flex items-center gap-2",
     "h-10",
     "px-4",
-    "rounded-lg",
+    "rounded-full",
     "transition-all duration-200",
     "border border-default-200",
     "bg-background/60",
@@ -177,9 +177,9 @@ export const Navbar = () => {
                     >
                       <div className="flex items-center gap-2">
                         <div className="h-2 w-2 rounded-full bg-success" />
-                        <span className="text-sm font-medium">
-                          .. {account.displayName.slice(5)}
-                        </span>
+                        {/*<span className="text-sm font-medium">*/}
+                        {/*  .. {account.displayName.slice(5)}*/}
+                        {/*</span>*/}
                         {/*{account.displayBalance && (*/}
                         {/*  <span className="text-sm text-default-500">*/}
                         {/*    ({account.displayBalance})*/}
