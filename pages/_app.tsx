@@ -13,8 +13,17 @@ import { WagmiProvider } from "wagmi";
 import { type Locale, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { config } from "@/lib/wagmi";
 import { AnimatePresence } from "framer-motion";
+import { useMemo } from "react";
+import DefaultLayout from "@/layouts/default";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5 * 60 * 1000, // 5 minutes
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 // Shared transition configuration
 export const TRANSITION_CONFIG = {
@@ -28,16 +37,32 @@ export const CARD_TRANSITION_ID = "card-transition";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
-  const { locale } = useRouter() as { locale: Locale };
+
+  // Memoize locale to prevent unnecessary re-renders
+  const locale = useMemo(() => {
+    return router.locale as Locale;
+  }, [router.locale]);
+
+  // Memoize page key to reduce re-renders
+  const pageKey = useMemo(() => {
+    return router.route;
+  }, [router.route]);
 
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
-        <RainbowKitProvider locale={locale}>
+        <RainbowKitProvider
+          locale={locale}
+          // Add these props to stabilize the provider
+          showRecentTransactions={true}
+          coolMode
+        >
           <HeroUIProvider navigate={router.push}>
             <NextThemesProvider>
               <AnimatePresence mode="wait">
-                <Component {...pageProps} key={router.route} />
+                <DefaultLayout>
+                <Component {...pageProps} key={pageKey} />
+                </DefaultLayout>
               </AnimatePresence>
             </NextThemesProvider>
           </HeroUIProvider>

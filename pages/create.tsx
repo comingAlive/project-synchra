@@ -1,5 +1,3 @@
-import DefaultLayout from "@/layouts/default";
-
 import { Form, Input, Button, User } from "@heroui/react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -186,19 +184,17 @@ const CreatePage = () => {
 
   const { address } = useAccount();
   return (
-    <DefaultLayout>
-      <div className="flex sm:max-w-xl mx-auto flex-col gap-8 justify-center items-center">
-        <User
-          className="self-end"
-          avatarProps={{
-            src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGklunSbvzFMwXyBTzb9Nq0AGvaV4FV6SX7Laz-0rB7ECl2PB3YbrGnqZ5t5X0hiFj9kA&usqp=CAU",
-          }}
-          description={"..." + address?.slice(-5)}
-          name="Objective Issuer"
-        />
-        <FormComponent />
-      </div>
-    </DefaultLayout>
+    <div className="flex sm:max-w-xl mx-auto flex-col gap-8 justify-center items-center">
+      <User
+        className="self-end"
+        avatarProps={{
+          src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGklunSbvzFMwXyBTzb9Nq0AGvaV4FV6SX7Laz-0rB7ECl2PB3YbrGnqZ5t5X0hiFj9kA&usqp=CAU",
+        }}
+        description={"..." + address?.slice(-5)}
+        name="Objective Issuer"
+      />
+      <FormComponent/>
+    </div>
   );
 };
 

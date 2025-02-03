@@ -24,7 +24,6 @@ const DetailPage = ({ item }) => {
   }, []);
 
   return (
-    <DefaultLayout>
       <motion.div
         layoutId={`${CARD_TRANSITION_ID}-${4}`}
         initial={{ opacity: 0, scale: 0.9 }}
@@ -66,7 +65,6 @@ const DetailPage = ({ item }) => {
           </div>
         </motion.div>
       </motion.div>
-    </DefaultLayout>
   );
 };
 

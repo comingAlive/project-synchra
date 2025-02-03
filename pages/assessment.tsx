@@ -168,7 +168,6 @@ const AssessmentPage = () => {
 
   if (showResults) {
     return (
-      <DefaultLayout>
         <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
           <Card className="w-full max-w-lg">
             <CardHeader>
@@ -208,13 +207,11 @@ const AssessmentPage = () => {
             </CardBody>
           </Card>
         </div>
-      </DefaultLayout>
     );
   }
 
   return (
-    <DefaultLayout>
-      <div className=" bg-blue-50 border rounded-xl flex flex-col items-center justify-center p-4">
+      <div className=" bg-blue-50/25 border rounded-xl flex flex-col items-center justify-center p-4">
         <div className="text-2xl mb-8">Based on your <span className="underline decoration-dashed decoration-black/20 decoration-from-font underline-offset-8">average behavior from the past</span></div>
         <Card className="w-full max-w-lg mb-8 mt-8">
           <CardHeader>
@@ -262,7 +259,6 @@ const AssessmentPage = () => {
           </CardBody>
         </Card>
       </div>
-    </DefaultLayout>
   );
 };
 
