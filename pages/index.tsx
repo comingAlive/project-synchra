@@ -38,12 +38,10 @@ const CheckIcon = (props) => {
       className="!text-white"
       width="1em"
       {...props}
-
     >
       <path
         aria-hidden="true"
         className="!text-white"
-
         strokeLinecap="round"
         strokeLinejoin="round"
         d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
@@ -57,7 +55,6 @@ const UncheckIcon = (props) => {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       className="size-6"
-
       aria-hidden="true"
       fill="none"
       focusable="false"
@@ -69,7 +66,6 @@ const UncheckIcon = (props) => {
       viewBox="0 0 24 24"
       width="1em"
       {...props}
-
     >
       <path
         strokeLinecap="round"
@@ -143,7 +139,11 @@ const CheckboxPersonal = () => {
         variant="flat"
         {...getLabelProps()}
       >
-        {children ? children : isSelected ? "Personal Sorting" : "Personal Sorting"}
+        {children
+          ? children
+          : isSelected
+            ? "Personal Sorting"
+            : "Personal Sorting"}
       </Chip>
     </label>
   );
@@ -182,9 +182,14 @@ const IndexPage = () => {
         {results.length > 0 ? (
           <CheckboxPersonal />
         ) : (
-          <span className="text-gray-400">Personal Sorting is Disabled - Please Complete  <NextLink href="/assessment"><Link>
-            The Assessment
-          </Link></NextLink></span>
+          <span className="text-gray-400">
+            Personal Sorting is Disabled - Please Complete{" "}
+            <NextLink as={"span"} href="/assessment">
+              <Link as="span">
+              The Assessment
+              </Link>
+            </NextLink>
+          </span>
         )}
         <Dropdown>
           <DropdownTrigger>
