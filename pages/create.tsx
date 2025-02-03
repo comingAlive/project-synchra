@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import {DatePicker} from "@heroui/react";
 import {now, getLocalTimeZone} from "@internationalized/date";
 import {useAccount} from "wagmi";
+import OpenAI from "openai";
 
 const DeadlineComponent = () => (
   <div className="w-full max-w-xl flex flex-row gap-4">
@@ -64,10 +65,6 @@ const FormComponent = () => {
       validationErrors={errors}
       onSubmit={onSubmit}
     >
-      {/*<p className="text-sm text-gray-600">*/}
-      {/*  OI defines a task (e.g., "Build cross-chain API") with embedded success*/}
-      {/*  metrics, deadlines, and crypto rewards.*/}
-      {/*</p>*/}
       <Input
         size="lg"
         variant="underlined"
@@ -140,6 +137,10 @@ const FormComponent = () => {
         }
       />
       <Button fullWidth size="lg" type="submit" variant="flat">
+        Check
+      </Button>
+
+      <Button fullWidth size="lg" type="submit" variant="flat">
         Create
       </Button>
 
@@ -158,6 +159,13 @@ function callServer(data) {
 }
 
 const CreatePage = () => {
+
+  const client = new OpenAI({
+    apiKey: process.env.NEXT_PUBLIC_DEEPSEEK_API_KEY,
+    baseURL: 'https://api.deepseek.com',
+    dangerouslyAllowBrowser: true
+  });
+
   const {address} = useAccount()
   return (
     <DefaultLayout>
@@ -167,7 +175,7 @@ const CreatePage = () => {
           avatarProps={{
             src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGklunSbvzFMwXyBTzb9Nq0AGvaV4FV6SX7Laz-0rB7ECl2PB3YbrGnqZ5t5X0hiFj9kA&usqp=CAU",
           }}
-          description={"..." +address.slice(-5)}
+          description={"..." +address?.slice(-5)}
           name="Objective Issuer"
         />
         <FormComponent />
