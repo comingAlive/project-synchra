@@ -8,6 +8,7 @@ import {
   DropdownMenu,
   DropdownTrigger,
   Image,
+  Link,
 } from "@heroui/react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
@@ -19,6 +20,7 @@ const initialArr = [1, 2, 3, 4, 5, 6];
 import { useCheckbox, Chip, VisuallyHidden, tv } from "@heroui/react";
 import { useAtom } from "jotai";
 import { assessmentResultsAtom } from "@/lib/jotai";
+import NextLink from "next/link";
 
 const CheckIcon = (props) => {
   return (
@@ -172,6 +174,7 @@ const IndexPage = () => {
     setItems(sortedItems);
   };
 
+  // @ts-ignore
   return (
     <DefaultLayout>
       {/* Controls container */}
@@ -179,7 +182,9 @@ const IndexPage = () => {
         {results.length > 0 ? (
           <CheckboxPersonal />
         ) : (
-          <span className="text-gray-400">Checkbox Disabled</span>
+          <span className="text-gray-400">Personal Sorting is Disabled - Please Complete  <NextLink href="/assessment"><Link>
+            The Assessment
+          </Link></NextLink></span>
         )}
         <Dropdown>
           <DropdownTrigger>

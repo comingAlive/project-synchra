@@ -2,10 +2,28 @@ import DefaultLayout from "@/layouts/default";
 
 import { Form, Input, Button } from "@heroui/react";
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+
+import {DatePicker} from "@heroui/react";
+import {now, getLocalTimeZone} from "@internationalized/date";
+
+const DeadlineComponent = () => (
+  <div className="w-full max-w-xl flex flex-row gap-4">
+    <DatePicker
+      hideTimeZone
+      size="lg"
+      showMonthAndYearPickers
+      defaultValue={now(getLocalTimeZone()) as any}
+      label="Deadline"
+      variant="bordered"
+    />
+  </div>
+);
+
 
 const FormComponent = () => {
   const [errors, setErrors] = useState({});
-  const [metrics, setMetrics] = useState(["", "", ""]);
+  const [metrics, setMetrics] = useState([""]);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -27,6 +45,12 @@ const FormComponent = () => {
     setMetrics([...metrics, ""]);
   };
 
+  const removeMetric = (index) => {
+    if (metrics.length > 1) {
+      setMetrics(metrics.filter((_, i) => i !== index));
+    }
+  };
+
   const updateMetric = (index, value) => {
     const newMetrics = [...metrics];
     newMetrics[index] = value;
@@ -39,10 +63,10 @@ const FormComponent = () => {
       validationErrors={errors}
       onSubmit={onSubmit}
     >
-      <p className="text-sm text-gray-600">
-        OI defines a task (e.g., "Build cross-chain API") with embedded success
-        metrics, deadlines, and crypto rewards.
-      </p>
+      {/*<p className="text-sm text-gray-600">*/}
+      {/*  OI defines a task (e.g., "Build cross-chain API") with embedded success*/}
+      {/*  metrics, deadlines, and crypto rewards.*/}
+      {/*</p>*/}
       <Input
         size="lg"
         variant="underlined"
@@ -51,25 +75,73 @@ const FormComponent = () => {
         name="name"
         placeholder="Enter Objective's name"
       />
-      <div className="flex flex-col gap-2">
-        <p className="text-sm font-semibold">Success Metrics:</p>
-        {metrics.map((metric, index) => (
-          <Input
-            key={index}
-            size="lg"
-            variant="underlined"
-            placeholder={`Enter Success Metric ${index + 1}`}
-            value={metric}
-            onChange={(e) => updateMetric(index, e.target.value)}
-          />
-        ))}
-        <Button type="button" variant="flat" onClick={addMetric}>
-          + Add Metric
+      <div className="flex flex-col w-full gap-4">
+        <p className="text-lg font-semibold">Success Metrics:</p>
+        <AnimatePresence>
+          {metrics.map((metric, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+              className="flex items-center gap-2"
+            >
+              <Input
+                size="lg"
+                variant="underlined"
+                placeholder={`Enter Success Metric ${index + 1}`}
+                value={metric}
+                onChange={(e) => updateMetric(index, e.target.value)}
+              />
+              {metrics.length > 1 && (
+                <Button
+                  size="sm"
+                  className="!w-[20px]"
+                  radius="full"
+                  type="button"
+                  variant="bordered"
+                  onPress={() => removeMetric(index)}
+                >
+                  -
+                </Button>
+              )}
+            </motion.div>
+          ))}
+        </AnimatePresence>
+        <Button
+          type="button"
+          className="mt-4"
+          radius="full"
+          variant="ghost"
+          color="primary"
+          onPress={addMetric}
+        >
+          +
         </Button>
       </div>
-      <Button type="submit" variant="flat">
-        Submit
+      <DeadlineComponent/>
+      <Input
+        type="number"
+        label="Reward"
+        size="lg"
+        variant="underlined"
+        placeholder="0.00"
+        startContent={
+          <div className="pointer-events-none flex items-center">
+            <span className="text-default-400 text-small">$</span>
+          </div>
+        }
+        endContent={
+          <div className="pointer-events-none flex items-center">
+            <span className="text-default-400 text-small">USDC</span>
+          </div>
+        }
+      />
+      <Button fullWidth size="lg" type="submit" variant="flat">
+        Create
       </Button>
+
     </Form>
   );
 };

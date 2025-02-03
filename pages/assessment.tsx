@@ -214,7 +214,7 @@ const AssessmentPage = () => {
 
   return (
     <DefaultLayout>
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+      <div className=" bg-blue-50 border rounded-xl flex items-center justify-center p-4">
         <Card className="w-full max-w-lg">
           <CardHeader>
             <div className="flex justify-between items-center w-full">
