@@ -1,6 +1,13 @@
-import {Button, Card, CardBody, CardHeader, Image, Radio, RadioGroup} from "@heroui/react";
+import {
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  Radio,
+  RadioGroup,
+} from "@heroui/react";
 import { useState } from "react";
-import {AnimatePresence, motion} from "framer-motion";
+
 import DefaultLayout from "@/layouts/default";
 
 const AssessmentPage = () => {
@@ -89,9 +96,9 @@ const AssessmentPage = () => {
                 Question {currentQuestion + 1}/{questions.length}
               </h2>
               <span className="text-sm text-gray-500">
-              Progress:{" "}
+                Progress:{" "}
                 {Math.round(((currentQuestion + 1) / questions.length) * 100)}%
-            </span>
+              </span>
             </div>
           </CardHeader>
           <CardBody>
@@ -134,7 +141,6 @@ const AssessmentPage = () => {
         </Card>
       </div>
     </DefaultLayout>
-
   );
 };
 
