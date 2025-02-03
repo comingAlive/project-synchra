@@ -1,6 +1,8 @@
 import {
   Button,
-  Kbd, Link,
+  Input,
+  Kbd,
+  Link,
   link as linkStyles,
   Navbar as HeroUINavbar,
   NavbarBrand,
@@ -13,49 +15,120 @@ import {
 import NextLink from "next/link";
 import clsx from "clsx";
 
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { siteConfig } from "@/lib/site";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { GithubIcon, SearchIcon } from "@/components/icons";
-import {Input} from "@heroui/react";
-import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { tv } from "tailwind-variants";
+
+const buttonStyles = tv({
+  base: [
+    "inline-flex items-center justify-center gap-2",
+    "rounded-lg px-4 py-2",
+    "text-sm font-medium",
+    "transition-colors duration-200",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
+    "disabled:pointer-events-none disabled:opacity-50",
+  ],
+  variants: {
+    variant: {
+      solid: [
+        "bg-primary text-primary-foreground",
+        "hover:bg-primary/90",
+        "focus-visible:ring-primary",
+      ],
+      outline: [
+        "border border-primary",
+        "text-primary",
+        "hover:bg-primary/10",
+        "focus-visible:ring-primary",
+      ],
+      danger: [
+        "bg-danger text-danger-foreground",
+        "hover:bg-danger/90",
+        "focus-visible:ring-danger",
+      ],
+    },
+  },
+  defaultVariants: {
+    variant: "solid",
+  },
+});
+
+const chainButtonStyles = tv({
+  base: [
+    "flex items-center gap-2",
+    "min-w-[140px]",
+    "h-10",
+    "px-4",
+    "rounded-lg",
+    "transition-all duration-200",
+    "border border-default-200",
+    "bg-background/60",
+    "hover:bg-default-100",
+    "backdrop-blur-lg",
+    "backdrop-saturate-150",
+  ],
+});
+
+const accountButtonStyles = tv({
+  base: [
+    "flex items-center gap-2",
+    "h-10",
+    "px-4",
+    "rounded-lg",
+    "transition-all duration-200",
+    "border border-default-200",
+    "bg-background/60",
+    "hover:bg-default-100",
+    "backdrop-blur-lg",
+    "backdrop-saturate-150",
+    "group",
+  ],
+});
+
 
 
 export const Navbar = () => {
-
   const CustomConnectButton = () => {
     return (
       <ConnectButton.Custom>
         {({
-            account,
-            chain,
-            openAccountModal,
-            openChainModal,
-            openConnectModal,
-            authenticationStatus,
-            mounted,
-          }) => {
-          const ready = mounted && authenticationStatus !== 'loading';
+          account,
+          chain,
+          openAccountModal,
+          openChainModal,
+          openConnectModal,
+          authenticationStatus,
+          mounted,
+        }) => {
+          const ready = mounted && authenticationStatus !== "loading";
           const connected =
             ready &&
             account &&
             chain &&
-            (!authenticationStatus || authenticationStatus === 'authenticated');
+            (!authenticationStatus || authenticationStatus === "authenticated");
 
           return (
             <div
               {...(!ready && {
-                'aria-hidden': true,
-                'style': {
+                "aria-hidden": true,
+                style: {
                   opacity: 0,
-                  pointerEvents: 'none',
-                  userSelect: 'none',
+                  pointerEvents: "none",
+                  userSelect: "none",
                 },
               })}
             >
               {(() => {
                 if (!connected) {
                   return (
-                    <Button onClick={openConnectModal} size="lg" className="text-xl" variant="light">
+                    <Button
+                      onClick={openConnectModal}
+                      size="lg"
+                      className="text-xl"
+                      variant="light"
+                    >
                       Login
                     </Button>
                   );
@@ -86,7 +159,7 @@ export const Navbar = () => {
                         >
                           {chain.iconUrl && (
                             <img
-                              alt={chain.name ?? 'Chain icon'}
+                              alt={chain.name ?? "Chain icon"}
                               src={chain.iconUrl}
                               className="w-5 h-5"
                             />
@@ -104,12 +177,12 @@ export const Navbar = () => {
                       <div className="flex items-center gap-2">
                         <div className="h-2 w-2 rounded-full bg-success"></div>
                         <span className="text-sm font-medium">
-                        {account.displayName}
-                      </span>
+                          {account.displayName}
+                        </span>
                         {account.displayBalance && (
                           <span className="text-sm text-default-500">
-                          ({account.displayBalance})
-                        </span>
+                            ({account.displayBalance})
+                          </span>
                         )}
                       </div>
                     </button>
@@ -122,7 +195,6 @@ export const Navbar = () => {
       </ConnectButton.Custom>
     );
   };
-
 
   const searchInput = (
     <Input
@@ -209,7 +281,7 @@ export const Navbar = () => {
           </Button>
         </NavbarItem>
         <NavbarItem className="hidden md:flex">
-          <CustomConnectButton/>
+          <CustomConnectButton />
         </NavbarItem>
       </NavbarContent>
 
