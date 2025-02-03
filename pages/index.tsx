@@ -25,6 +25,7 @@ import { useAtom } from "jotai";
 import { assessmentResultsAtom } from "@/lib/jotai";
 import NextLink from "next/link";
 import { supabase } from "@/lib/supabaseClient";
+import { CARD_TRANSITION_ID, TRANSITION_CONFIG } from "@/pages/_app";
 
 const CheckIcon = (props) => {
   return (
@@ -191,66 +192,23 @@ const IndexPage = () => {
   // @ts-ignore
   return (
     <DefaultLayout>
-      {/* Controls container */}
-      <div className="flex items-center justify-end gap-4 p-6">
-        {results.length > 0 ? (
-          <CheckboxPersonal />
-        ) : (
-          <span className="text-gray-400">
-            Personal Sorting is Disabled - Please Complete{" "}
-            <NextLink as={"span"} href="/assessment">
-              <Link as="span">The Assessment</Link>
-            </NextLink>
-          </span>
-        )}
-        <Dropdown>
-          <DropdownTrigger>
-            <Button
-              size={"lg"}
-              className="bg-gradient-to-tr from-blue-500 to-purple-500 text-white shadow-lg"
-              radius="full"
-            >
-              Sort By
-            </Button>
-          </DropdownTrigger>
-          <DropdownMenu
-            aria-label="Sort Options"
-            onAction={(key) => handleSort(key)}
-          >
-            <DropdownItem key="default">Default</DropdownItem>
-            <DropdownItem key="asc">Ascending</DropdownItem>
-            <DropdownItem key="desc">Descending</DropdownItem>
-          </DropdownMenu>
-        </Dropdown>
-      </div>
-
-      {/* Grid displaying the cards */}
       <motion.div
-        layout
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={TRANSITION_CONFIG}
         className="grid grid-cols-3 gap-6 p-6"
-        transition={{
-          duration: 0.5,
-          type: "spring",
-          stiffness: 100,
-          damping: 15,
-        }}
       >
-        <AnimatePresence>
-          {items.map((item) => (
-            <motion.div
-              key={item.id}
-              layout
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.85, y: 20 }}
-              initial={{ opacity: 0, scale: 0.85, y: 20 }}
-              transition={{
-                duration: 0.5,
-                type: "spring",
-                stiffness: 120,
-                damping: 20,
-              }}
-              onClick={() => toggleItem(item)}
-            >
+        {items.map((item) => (
+          <motion.div
+            key={item.id}
+            layoutId={`${CARD_TRANSITION_ID}-${item.id}`}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={TRANSITION_CONFIG}
+          >
+            <NextLink href={`/${item.id}`}>
               <Card className="cursor-pointer rounded-2xl px-4 py-6 shadow-lg transition-all hover:scale-105 hover:shadow-2xl">
                 <CardHeader className="flex-col items-start px-4 pt-2 pb-0">
                   <div className={`flex w-full justify-between items-around`}>
@@ -302,6 +260,7 @@ const IndexPage = () => {
                     </svg>
                     <InputOtp
                       isReadOnly
+                      variant="bordered"
                       defaultValue={item.reward}
                       length={String(item.reward).length}
                     />
@@ -334,9 +293,9 @@ const IndexPage = () => {
                   {/*</h4>*/}
                 </CardFooter>
               </Card>
-            </motion.div>
-          ))}
-        </AnimatePresence>
+            </NextLink>
+          </motion.div>
+        ))}
       </motion.div>
     </DefaultLayout>
   );
