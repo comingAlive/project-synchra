@@ -1,4 +1,5 @@
 import {
+  Badge,
   Button,
   Card,
   CardBody,
@@ -6,7 +7,9 @@ import {
   CardHeader,
   Chip,
   Image,
+  Input,
   InputOtp,
+  Tooltip,
   tv,
   useCheckbox,
   VisuallyHidden,
@@ -20,6 +23,7 @@ import { assessmentResultsAtom } from "@/lib/jotai";
 import NextLink from "next/link";
 import { supabase } from "@/lib/supabaseClient";
 import { CARD_TRANSITION_ID, TRANSITION_CONFIG } from "@/pages/_app";
+import CustomListBox from "@/components/CustomListBox";
 
 const initialArr = [1, 2, 3, 4, 5, 6];
 
@@ -185,6 +189,17 @@ const IndexPage = () => {
     setItems(sortedItems);
   };
 
+   const MailIcon = (props) => {
+    return (
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"
+           className="size-6">
+        <path strokeLinecap="round" strokeLinejoin="round"
+              d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+      </svg>
+
+    );
+   };
+
   // @ts-ignore
   return (
     <motion.div
@@ -208,11 +223,25 @@ const IndexPage = () => {
               className="cursor-pointer rounded-2xl px-4 py-6 shadow-lg transition-all hover:scale-105 hover:shadow-2xl">
               <CardHeader className="flex-col items-start px-4 pt-2 pb-0">
                 <div className={`flex w-full justify-between items-around`}>
-                  <p className="font-bold uppercase text-gray-700 text-tiny">
-                    Daily Mix
+                  <p className="font-bold !w-full uppercase text-gray-700 text-tiny">
+                    <Badge
+                      content={'~'} variant="flat" color="success">Open ㅤ</Badge>
                   </p>
                   <div className="flex">
-                    <Chip className="scale-85" variant="flat" size="sm">
+                    <Tooltip
+                      content={
+                        <div className="px-1 py-2">
+                          <div className="text-small font-bold">Custom Content</div>
+                          <div className="text-tiny">This is a custom tooltip content</div>
+                        </div>
+                      }
+                    >
+                      <Chip color="secondary" className="scale-85" variant="flat" size="sm">
+                        ≃ 0.93
+                      </Chip>
+                    </Tooltip>
+                    
+                    <Chip color="success" className="scale-85" variant="flat" size="sm">
                       ..{item.issuer.slice(-4)}
                     </Chip>
                     <Chip className="scale-85" variant="flat" size="sm">
@@ -220,15 +249,21 @@ const IndexPage = () => {
                     </Chip>
                   </div>
                 </div>
-                <small className="text-gray-500">12 Tracks</small>
+                <small className="text-gray-500">4 Metrics / 488h to complete (June 12)</small>
                 <h4 className="text-lg font-bold text-gray-800">
                   Frontend Radio
                 </h4>
               </CardHeader>
               <CardBody className="flex justify-center overflow-visible py-4">
+                <CustomListBox/>
+                <div className="my-6 flex flex-col !gap-4">
+                  <Input isReadOnly startContent={<MailIcon />} value={"first diaisdsiad dasidsai"} variant="underlined" size="sm"/>
+                  <Input isReadOnly startContent={<MailIcon />} value={"first diaisdsiad dasidsai"} variant="underlined" size="sm"/>
+                  <Input isReadOnly startContent={<MailIcon />} value={"first diaisdsiad dasidsai"} variant="underlined" size="sm"/>
+                </div>
                 <Image
                   alt="Card background"
-                  className="rounded-xl object-cover shadow-md"
+                  className="rounded-xl  object-cover shadow-md"
                   src="https://heroui.com/images/hero-card-complete.jpeg"
                   width={270}
                 />
